@@ -13,32 +13,28 @@
             padding: 0;
             font-family: 'Roboto';
             overflow: hidden;
-        }
-        .container{
-            height: 70vh;
-            width: 100vw;
-            text-align: center;
-            padding-top: 80px;
             background: rgb(28, 26, 36);
         }
-        .footer{
-            height: 30vh;
+        .container{
+            height: 100vh;
             width: 100vw;
-            background: rgb(13, 12, 16);
-
+            text-align: center;
+            padding-top: 65px;
+            background: rgb(28, 26, 36);
         }
+
+        
         .container h3{
-            font-size: 50px;
+            font-size: 37px;
             color: yellow;
             margin: 0px 0px 50px 0px;
             cursor: pointer;
-            filter: brightness(88%);
             transition: 0.4s;
 
         }
 
         .timer{
-            font-size: 62px;
+            font-size: 80px;
             color: yellowgreen;
             cursor: pointer;
 
@@ -52,9 +48,6 @@
         #wholeTimer{
             display: block;
         }
-        .container h3:hover{
-            filter: brightness(100%);
-        }
         
         #start{
             padding: 20px;
@@ -63,7 +56,7 @@
             color: white;
             border: none;
             font-size: 20px;
-            margin-top: 40px;
+            margin-top: 50px;
             cursor: pointer;
             transition: 0.4s;
 
@@ -88,13 +81,27 @@
         #stop:hover{
             background: darkslategray;
         }
+        h1{
+            color: yellowgreen;
+            font-size: 35px;
+            margin-bottom: 40px;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h5{
+            color: yellow;
+            padding-top: 15px;
+        }
 
     </style>
 </head>
 <body>
+    <h1>Made by Tanush P :) </h1>
+
     <div class="container">
         <h3>Time left</h3>
         <span id="wholeTimer"><span class="timer minutes">0</span><span class="colen">:</span><span class="timer seconds">00</span></span>
+        <h5>To Drink Water.</h5>
         <audio class="timerEnd" controls style="display: none;">
             <source src="timerend.mp3" type="audio/mp3" >
           </audio>
@@ -102,7 +109,6 @@
         <button id="stop">Stop and Drink</button>
 
     </div>
-    <div class="footer"></div>
 </body>
 <script>
     let timer_sec = document.querySelector(".timer.seconds");
@@ -120,6 +126,7 @@
         time_remaining_seconds = 60;
         time_remaining_minutes = 5;
         timerEnd.pause();
+        start_btn.style.display = "inline";
 
     }
 
@@ -131,7 +138,13 @@
 start_btn.addEventListener('click', ()=>{
 
     timer_min.innerHTML = time_remaining_minutes;
+    start_btn.style.display = "none";
+    stop_btn.style.display = "inline";
+    stop_btn.addEventListener('click', ()=>{
+        reset();
+        clearInterval(timings_interval);
 
+    })
     function timings() {
         if (time_remaining_seconds === 60) {
             time_remaining_minutes -= 1;
@@ -146,10 +159,7 @@ start_btn.addEventListener('click', ()=>{
 
         if (time_remaining_minutes <= 0 && time_remaining_seconds <= 0) {
             clearInterval(timings_interval);
-            stop_btn.addEventListener('click', ()=>{
-                reset();
-            })
-            stop_btn.style.display = "inline";
+
 
 
             timerEnd.play();
