@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water drink reminder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;900&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto';
+            overflow: hidden;
+        }
+        .container{
+            height: 70vh;
+            width: 100vw;
+            text-align: center;
+            padding-top: 80px;
+            background: rgb(28, 26, 36);
+        }
+        .footer{
+            height: 30vh;
+            width: 100vw;
+            background: rgb(13, 12, 16);
+
+        }
+        .container h3{
+            font-size: 50px;
+            color: yellow;
+            margin: 0px 0px 50px 0px;
+            cursor: pointer;
+            filter: brightness(88%);
+            transition: 0.4s;
+
+        }
+
+        .timer{
+            font-size: 62px;
+            color: yellowgreen;
+            cursor: pointer;
+
+        }
+        .colen{
+            font-size: 62px;
+            color: yellowgreen;
+            cursor: pointer;
+
+        }
+        #wholeTimer{
+            display: block;
+        }
+        .container h3:hover{
+            filter: brightness(100%);
+        }
+        
+        #start{
+            padding: 20px;
+            border-radius: 12px;
+            background: yellowgreen;
+            color: white;
+            border: none;
+            font-size: 20px;
+            margin-top: 40px;
+            cursor: pointer;
+            transition: 0.4s;
+
+
+        }
+        #stop{
+            padding: 20px;
+            border-radius: 12px;
+            background: red;
+            color: white;
+            border: none;
+            font-size: 20px;
+            margin-top: 40px;
+            cursor: pointer;
+            transition: 0.4s;
+            display: none;
+
+        }
+        #start:hover{
+            background: darkslategray;
+        }
+        #stop:hover{
+            background: darkslategray;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Time left</h3>
+        <span id="wholeTimer"><span class="timer minutes">0</span><span class="colen">:</span><span class="timer seconds">00</span></span>
+        <audio class="timerEnd" controls style="display: none;">
+            <source src="timerend.mp3" type="audio/mp3" >
+          </audio>
+        <button id="start">Start water drink</button>
+        <button id="stop">Stop and Drink</button>
+
+    </div>
+    <div class="footer"></div>
+</body>
+<script>
+    let timer_sec = document.querySelector(".timer.seconds");
+    let timer_min = document.querySelector(".timer.minutes");
+    let start_btn = document.querySelector('#start');
+    let stop_btn = document.querySelector('#stop');
+    let time_remaining_seconds = 60;
+    let time_remaining_minutes = 5;
+    let timerEnd = document.querySelector(".timerEnd");
+
+    function reset(){
+        timer_min.innerHTML = "0";
+        timer_sec.innerHTML = "00";
+        stop_btn.style.display = "none";
+        time_remaining_seconds = 60;
+        time_remaining_minutes = 5;
+        timerEnd.pause();
+
+    }
+
+
+
+
+
+
+start_btn.addEventListener('click', ()=>{
+
+    timer_min.innerHTML = time_remaining_minutes;
+
+    function timings() {
+        if (time_remaining_seconds === 60) {
+            time_remaining_minutes -= 1;
+        } else if (time_remaining_seconds === 0) {
+            time_remaining_minutes -= 1;
+            time_remaining_seconds = 60;
+        }
+
+        time_remaining_seconds -= 1;
+        timer_sec.innerHTML = time_remaining_seconds;
+        timer_min.innerHTML = time_remaining_minutes;
+
+        if (time_remaining_minutes <= 0 && time_remaining_seconds <= 0) {
+            clearInterval(timings_interval);
+            stop_btn.addEventListener('click', ()=>{
+                reset();
+            })
+            stop_btn.style.display = "inline";
+
+
+            timerEnd.play();
+            timerEnd.loop = true;
+
+            
+        }
+    }
+
+    let timings_interval = setInterval(timings, 1000);
+})
+
+
+
+</script>
+</html>
